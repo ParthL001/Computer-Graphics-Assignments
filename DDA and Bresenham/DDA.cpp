@@ -1,59 +1,45 @@
-#include <GL/freeglut.h>
+#include <GL/glut.h>
 #include <cmath>
-#include <iostream>
 using namespace std;
 
-float x_start, y_start, x_end, y_end;
 
-// DDA Algorithm
-void drawLineDDA() {
-    float dx = x_end - x_start;
-    float dy = y_end - y_start;
 
-    float steps = max(abs(dx), abs(dy));
+void display(){
+    float x1 = 100 , y1 = 100 , x2 = 400 , y2 = 300;
+    float dx = x2 - x1;
+    float dy = y2 - y1;
+
+    int steps = (abs(dx) > abs(dy)) ? abs(dx) : abs(dy);
 
     float xInc = dx / steps;
     float yInc = dy / steps;
+    
+    float x = x1 , y = y1;
 
-    glBegin(GL_POINTS);
-    for (int i = 0; i <= steps; i++) {
-        glVertex2f(x_start, y_start);
-        x_start += xInc;
-        y_start += yInc;
-    }
-    glEnd();
-}
-
-// Display function
-void display() {
     glClear(GL_COLOR_BUFFER_BIT);
+    glBegin(GL_POINTS);
 
-    glColor3f(1, 1, 1); // White line
-    drawLineDDA();
+    for(int i = 0 ; i <= steps ; i++){
+        glVertex2i(round(x) , round(y));
+        x += xInc;
+        y += yInc;
+    }
 
+    glEnd();
     glFlush();
 }
 
-void init() {
-    glClearColor(0, 0, 0, 1);
-    gluOrtho2D(-100, 100, -100, 100);
+void init(){
+    glClearColor(0,0,0,1);
+    glColor3f(1,1,1);
+    gluOrtho2D(0,500,0,500);
 }
 
-int main(int argc, char** argv) {
-    cout << "Enter x1 y1: ";
-    cin >> x_start >> y_start;
-
-    cout << "Enter x2 y2: ";
-    cin >> x_end >> y_end;
-
-    glutInit(&argc, argv);
-    glutInitWindowSize(600, 600);
-    glutCreateWindow("DDA Line Drawing");
-
+int main(int argc , char** argv){
+    glutInit(&argc , argv);
+    glutInitWindowSize(500,500);
+    glutCreateWindow("DDA Line");
     init();
     glutDisplayFunc(display);
-
     glutMainLoop();
-    return 0;
 }
-//-Iinclude -Llib -lfreeglut -lopengl32 -lglu32 -o
