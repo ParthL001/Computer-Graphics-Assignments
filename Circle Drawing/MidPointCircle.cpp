@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-int xc, yc, r;
+int xc = 200 , yc = 200, r = 100;
 
 // Function to plot symmetric points
 void plotPoints(int x, int y) {
@@ -57,10 +57,6 @@ void init() {
 }
 
 int main(int argc, char** argv) {
-    cout << "Enter center (xc yc): ";
-    cin >> xc >> yc;
-    cout << "Enter radius: ";
-    cin >> r;
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
